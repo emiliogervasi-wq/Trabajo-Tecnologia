@@ -261,7 +261,11 @@
                     </h2>
                     <p class="text-xs text-slate-600 font-medium mt-0.5">Escuchando solicitudes en vivo de la <span id="teacherRoomLabel" class="font-extrabold text-sky-600">SALA-1</span></p>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Selector de Voz del Sistema para elegir la voz femenina exacta disponible en el PC -->
+                    <select id="voiceSelector" onchange="changeSelectedVoice()" title="Elegir voz de V.I.K.I." class="bg-white/90 border border-sky-300 text-slate-700 text-xs font-bold rounded-xl px-2.5 py-2 max-w-[180px] focus:outline-none focus:border-sky-500 shadow-sm">
+                        <option value="">Voz automática V.I.K.I.</option>
+                    </select>
                     <button type="button" onclick="testVikiVoice()" class="cursor-pointer px-4 py-2 bg-gradient-to-b from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 text-xs font-bold rounded-xl text-white transition shadow">
                         <i class="fa-solid fa-volume-high mr-1.5"></i> Probar Voz V.I.K.I.
                     </button>
@@ -293,7 +297,7 @@
 
     </main>
 
-    <!-- LÓGICA DE JAVASCRIPT + SINTETIZADOR DE VOZ V.I.K.I. CON EFECTO MULTI-PARLANTE -->
+    <!-- LÓGICA DE JAVASCRIPT + PROCESADOR ACÚSTICO V.I.K.I. (MULTI-PARLANTE) -->
     <script>
         const CONFIG = {
             alertTypes: {
@@ -380,34 +384,58 @@
         let currentStudentAlertId = null;
         let vikiEnabled = true;
         let selectedVikiVoice = null;
-        let vikiTimers = [];
+        let allSpanishVoices = [];
+        let activeAudioNodes = [];
 
-        // Cargar y calibrar voz femenina latinoamericana estilo V.I.K.I. (Yo, Robot - Doblaje Latino/Chile)
+        // Cargar voces femeninas en español (priorizando Latino/Chile/Natural) y poblar el selector
         function loadVikiVoice() {
             if (!('speechSynthesis' in window)) return;
             const voices = window.speechSynthesis.getVoices();
             if (!voices.length) return;
 
-            const spanishVoices = voices.filter(v => v.lang.toLowerCase().includes('es'));
+            allSpanishVoices = voices.filter(v => v.lang.toLowerCase().includes('es'));
+            const selector = document.getElementById('voiceSelector');
             
-            const latamFemaleKeywords = [
-                'catalina', 'paulina', 'sabina', 'dalia', 'ximena', 'sofia', 'sofía', 
-                'camila', 'valeria', 'helena', 'laura', 'monica', 'mónica', 
-                'google español de estados unidos', 'microsoft sabina', 'microsoft daria', 'female', 'mujer'
-            ];
-
-            selectedVikiVoice = spanishVoices.find(v => 
-                latamFemaleKeywords.some(kw => v.name.toLowerCase().includes(kw))
-            );
-
-            if (!selectedVikiVoice) {
-                selectedVikiVoice = spanishVoices.find(v => 
-                    ['es-cl', 'es-mx', 'es-419', 'es-us', 'es-ar'].includes(v.lang.toLowerCase())
-                );
+            if (selector && allSpanishVoices.length > 0) {
+                const currentVal = selector.value;
+                selector.innerHTML = allSpanishVoices.map((v, idx) => 
+                    `<option value="${idx}">${v.name.replace('Microsoft ', '').replace('Google ', '')} (${v.lang})</option>`
+                ).join('');
+                if (currentVal !== '' && allSpanishVoices[currentVal]) {
+                    selector.value = currentVal;
+                }
             }
 
-            if (!selectedVikiVoice) {
-                selectedVikiVoice = spanishVoices[0] || voices[0];
+            // Buscar voz femenina (Catalina, Paulina, Sabina, Dalia, Helena, Laura, Paloma, etc.)
+            const femaleKeywords = [
+                'catalina', 'paulina', 'sabina', 'dalia', 'paloma', 'ximena', 'sofia', 'sofía', 
+                'camila', 'valeria', 'helena', 'laura', 'monica', 'mónica', 'elena', 'lucia', 'lucía',
+                'google español de estados unidos', 'natural', 'female', 'mujer'
+            ];
+
+            const bestIndex = allSpanishVoices.findIndex(v => 
+                femaleKeywords.some(kw => v.name.toLowerCase().includes(kw))
+            );
+
+            if (bestIndex !== -1) {
+                selectedVikiVoice = allSpanishVoices[bestIndex];
+                if (selector && selector.value === '') selector.value = bestIndex;
+            } else {
+                const latamIndex = allSpanishVoices.findIndex(v => 
+                    ['es-cl', 'es-mx', 'es-419', 'es-us', 'es-ar'].includes(v.lang.toLowerCase())
+                );
+                const chosenIdx = latamIndex !== -1 ? latamIndex : 0;
+                selectedVikiVoice = allSpanishVoices[chosenIdx] || voices[0];
+                if (selector && selector.value === '') selector.value = chosenIdx;
+            }
+        }
+
+        function changeSelectedVoice() {
+            const selector = document.getElementById('voiceSelector');
+            const idx = parseInt(selector.value, 10);
+            if (!isNaN(idx) && allSpanishVoices[idx]) {
+                selectedVikiVoice = allSpanishVoices[idx];
+                speakViki('Voz de VIKI calibrada.');
             }
         }
 
@@ -416,15 +444,62 @@
             loadVikiVoice();
         }
 
-        function clearVikiAudio() {
-            vikiTimers.forEach(t => clearTimeout(t));
-            vikiTimers = [];
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
+        // Genera resonancia acústica de sala multi-parlante mediante Web Audio API (sin bloquear la voz)
+        function triggerVikiRoomAcoustics(durationSeconds = 2.8) {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioCtx();
+                const now = ctx.currentTime;
+
+                // Tres frecuencias armónicas muy sutiles que simulan el zumbido holográfico/central de U.S.R.
+                const freqs = [220, 330, 440];
+                freqs.forEach((f, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const delay = ctx.createDelay();
+                    const feedback = ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(f, now);
+
+                    // Micro-retardo de parlantes en sala (65ms y 130ms)
+                    delay.delayTime.setValueAtTime(0.065 * (idx + 1), now);
+                    feedback.gain.setValueAtTime(0.35, now);
+
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.018 / (idx + 1), now + 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + durationSeconds);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    gain.connect(delay);
+                    delay.connect(feedback);
+                    feedback.connect(delay);
+                    delay.connect(ctx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + durationSeconds);
+                    activeAudioNodes.push({ osc, ctx });
+                });
+            } catch (e) {
+                // Ignorar si el navegador bloquea Web Audio antes de interacción
             }
         }
 
-        // Función de locución estilo V.I.K.I. con efecto acústico de múltiples parlantes en sala
+        function clearVikiAudio() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            activeAudioNodes.forEach(item => {
+                try {
+                    item.osc.stop();
+                    item.ctx.close();
+                } catch (e) {}
+            });
+            activeAudioNodes = [];
+        }
+
+        // Función de locución estilo V.I.K.I. (frase pausada con micro-ecos entre cláusulas + atmósfera de sala)
         function speakViki(texto) {
             if (!vikiEnabled) return;
             if (!('speechSynthesis' in window)) return;
@@ -433,36 +508,34 @@
                 clearVikiAudio();
                 if (!selectedVikiVoice) loadVikiVoice();
 
-                // 3 capas acústicas con micro-retardos para simular megafonía central (varios parlantes en sala)
-                const parlantes = [
-                    { delay: 0,   volume: 1.0,  pitch: 1.08, rate: 0.96 }, // Parlante principal cercano
-                    { delay: 55,  volume: 0.45, pitch: 1.06, rate: 0.96 }, // Parlante medio de sala
-                    { delay: 115, volume: 0.20, pitch: 1.04, rate: 0.96 }  // Reverberación de fondo
-                ];
+                // Dividir la frase por comas o puntos para que cada parlante/cláusula respire con eco de sala
+                const partes = texto.split(/(?<=[.,:])\s+/).filter(Boolean);
+                const duracionEstimada = Math.max(2.2, texto.length * 0.075);
+                
+                // Activar atmósfera acústica multi-parlante en paralelo
+                triggerVikiRoomAcoustics(duracionEstimada);
 
-                parlantes.forEach(p => {
-                    const timer = setTimeout(() => {
-                        if (!vikiEnabled) return;
-                        const utterance = new SpeechSynthesisUtterance(texto);
-                        if (selectedVikiVoice) {
-                            utterance.voice = selectedVikiVoice;
-                            utterance.lang = selectedVikiVoice.lang;
-                        } else {
-                            utterance.lang = 'es-CL';
-                        }
-                        utterance.volume = p.volume;
-                        utterance.pitch = p.pitch;
-                        utterance.rate = p.rate;
-                        window.speechSynthesis.speak(utterance);
-                    }, p.delay);
-                    vikiTimers.push(timer);
+                partes.forEach((parte, index) => {
+                    const utterance = new SpeechSynthesisUtterance(parte);
+                    if (selectedVikiVoice) {
+                        utterance.voice = selectedVikiVoice;
+                        utterance.lang = selectedVikiVoice.lang;
+                    } else {
+                        utterance.lang = 'es-CL';
+                    }
+
+                    // Timbre femenino sereno, ligeramente cristalino (pitch 1.12) y cadencia calculada (rate 0.94)
+                    utterance.pitch = 1.12;
+                    utterance.rate = 0.94;
+                    utterance.volume = 1.0;
+
+                    window.speechSynthesis.speak(utterance);
                 });
             } catch (e) {
                 console.warn('Error en síntesis de voz:', e);
             }
         }
 
-        // Botón para encender o apagar completamente a V.I.K.I.
         function toggleVikiVoice() {
             vikiEnabled = !vikiEnabled;
             const label = document.getElementById('vikiLabel');
@@ -473,7 +546,7 @@
                 label.innerText = 'V.I.K.I.: ON';
                 icon.className = 'fa-solid fa-circle-nodes text-sky-600';
                 btn.className = 'cursor-pointer px-2.5 py-1 text-xs font-bold rounded-lg bg-gradient-to-b from-cyan-50 to-sky-100 border border-sky-300 text-sky-800 hover:bg-sky-200/70 transition flex items-center gap-1.5 shadow-sm';
-                speakViki('Sistemas de asistencia VIKI activados.');
+                speakViki('Sistemas de asistencia VIKI, en línea.');
             } else {
                 label.innerText = 'V.I.K.I.: OFF';
                 icon.className = 'fa-solid fa-volume-xmark text-slate-400';
@@ -485,8 +558,8 @@
         function testVikiVoice() {
             playAlertSound();
             setTimeout(() => {
-                speakViki(`Hola profesor. Sistemas de VIKI en línea. Monitoreando sala ${currentRoom.replace('-', ' ')} sin anomalías.`);
-            }, 300);
+                speakViki(`Hola profesor. Sistemas centrales de VIKI operativos. Monitoreando sala ${currentRoom.replace('-', ' ')}, sin anomalías.`);
+            }, 350);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -533,6 +606,7 @@
                 viewStudent.classList.add('hidden');
                 viewStudent.classList.remove('flex');
                 document.getElementById('teacherRoomLabel').innerText = currentRoom;
+                loadVikiVoice();
             }
 
             connectToRoom();
@@ -780,7 +854,7 @@
 
                 playSuccessSound();
                 setTimeout(() => {
-                    speakViki('Solicitud confirmada. El profesor ya fue notificado y va en camino.');
+                    speakViki('Solicitud confirmada. El profesor ya fue notificado, y va en camino.');
                 }, 400);
 
                 setTimeout(() => {

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AulaSilenciosa - Frutiger Aero & J.A.R.V.I.S.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            touch-action: manipulation;
+            /* Fondo blanco luminoso Frutiger Aero con cielo suave */
+            background: linear-gradient(180deg, #e0f4ff 0%, #f5fbff 42%, #ffffff 100%);
+            color: #0f2942;
+            overflow-x: hidden;
+        }
+
+        /* Esferas y burbujas ambientales estilo Frutiger Aero */
+        .aero-orb-1 {
+            position: fixed;
+            top: -8%;
+            left: -5%;
+            width: 48vw;
+            height: 48vw;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .aero-orb-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -5%;
+            width: 52vw;
+            height: 52vw;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.28) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .aero-orb-3 {
+            position: fixed;
+            top: 35%;
+            right: 20%;
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Paneles de cristal blanco Frutiger Aero */
+        .aero-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 249, 255, 0.78) 100%);
+            backdrop-filter: blur(22px) saturate(160%);
+            -webkit-backdrop-filter: blur(22px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 30px rgba(14, 116, 144, 0.10), inset 0 2px 3px rgba(255, 255, 255, 1);
+        }
+
+        /* Botones táctiles con brillo superior (Glossy Aero) */
+        .aero-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(235, 248, 255, 0.85) 100%);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(186, 230, 253, 0.9);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.10), inset 0 2px 2px rgba(255, 255, 255, 1);
+            transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        /* Reflejo curvo superior característico de Frutiger Aero */
+        .aero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 46%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.15) 100%);
+            border-radius: 22px 22px 50% 50% / 22px 22px 14px 14px;
+            pointer-events: none;
+        }
+        .aero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(2, 132, 199, 0.18), inset 0 2px 3px rgba(255, 255, 255, 1);
+            border-color: #38bdf8;
+        }
+        .aero-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Orbes de íconos brillantes tipo gel/agua */
+        .aqua-icon {
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12), inset 0 2px 3px rgba(255, 255, 255, 0.75);
+            position: relative;
+        }
+        .aqua-icon::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 15%;
+            width: 70%;
+            height: 38%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 999px;
+        }
+
+        .pulse-red {
+            animation: pulse-red 1.8s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45); }
+            70% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .pulse-green {
+            animation: pulse-green 1.8s infinite;
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+            70% { box-shadow: 0 0 0 18px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative selection:bg-sky-200">
+
+    <!-- Fondos ambientales Frutiger Aero -->
+    <div class="aero-orb-1"></div>
+    <div class="aero-orb-2"></div>
+    <div class="aero-orb-3"></div>
+
+    <!-- Header / Barra Superior Frutiger Aero -->
+    <header class="aero-glass sticky top-3 mx-3 md:mx-auto max-w-6xl w-[calc(100%-1.5rem)] rounded-3xl px-5 py-3.5 z-50 mt-3">
+        <div class="flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-3.5">
+                <div class="aqua-icon bg-gradient-to-b from-sky-400 to-blue-600 p-2.5 rounded-2xl text-white">
+                    <i class="fa-solid fa-bell text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-800 flex items-center gap-2">
+                        AulaSilenciosa
+                        <span class="text-[11px] bg-gradient-to-r from-sky-500 to-cyan-500 text-white px-2.5 py-0.5 rounded-full font-bold shadow-sm">Aero</span>
+                    </h1>
+                    <p class="text-xs text-sky-700/80 font-medium">Asistente de comunicación en tiempo real</p>
+                </div>
+            </div>
+
+            <!-- Selector de Rol, Voz J.A.R.V.I.S. y Código de Sala -->
+            <div class="flex flex-wrap items-center gap-2 bg-white/80 p-1.5 rounded-2xl border border-sky-200/80 shadow-inner">
+                <div class="flex bg-sky-100/70 rounded-xl p-0.5">
+                    <button id="btnRoleStudent" onclick="switchRole('estudiante')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow">
+                        <i class="fa-solid fa-user-graduate mr-1"></i> Alumno
+                    </button>
+                    <button id="btnRoleTeacher" onclick="switchRole('profesor')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-sky-700">
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Profesor
+                    </button>
+                </div>
+
+                <!-- Botón Toggle Voz J.A.R.V.I.S. -->
+                <button id="btnJarvisToggle" onclick="toggleJarvisVoice()" title="Activar o silenciar voz de J.A.R.V.I.S." class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-b from-cyan-50 to-sky-100 border border-sky-300 text-sky-800 hover:bg-sky-200/70 transition flex items-center gap-1.5 shadow-sm">
+                    <i id="jarvisIcon" class="fa-solid fa-robot text-sky-600"></i>
+                    <span id="jarvisLabel">J.A.R.V.I.S.: ON</span>
+                </button>
+
+                <div class="flex items-center gap-1.5 pl-2 pr-1 border-l border-sky-200">
+                    <span class="text-xs text-slate-500 font-semibold">Sala:</span>
+                    <input type="text" id="roomInput" value="SALA-1" onchange="changeRoom()" class="bg-white border border-sky-300 text-slate-800 text-xs font-extrabold rounded-lg px-2 py-1 w-20 text-center uppercase focus:outline-none focus:border-sky-500 shadow-inner">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:py-6 flex flex-col relative z-10">
+
+        <!-- ================= VISTA ESTUDIANTE ================= -->
+        <div id="studentView" class="flex-1 flex flex-col gap-6">
+            
+            <!-- Estado de confirmación (oculto por defecto) -->
+            <div id="studentStatusCard" class="hidden transition-all duration-300">
+                <!-- Se llena dinámicamente -->
+            </div>
+
+            <div class="text-center md:text-left px-1">
+                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">¿Qué necesitas comunicar?</h2>
+            </div>
+
+            <!-- Botones Táctiles de Alerta (Sin descripciones, limpios y cristalinos) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- 1. Baño Urgente -->
+                <button onclick="sendAlert('bano')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
+                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                        <i class="fa-solid fa-restroom"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold text-red-600 uppercase tracking-wider block mb-0.5">Urgente</span>
+                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Baño urgente</h3>
+                    </div>
+                </button>
+
+                <!-- 2. Enfermería -->
+                <button onclick="sendAlert('enfermeria')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
+                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                        <i class="fa-solid fa-kit-medical"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold text-red-600 uppercase tracking-wider block mb-0.5">Salud</span>
+                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Me siento mal</h3>
+                    </div>
+                </button>
+
+                <!-- 3. Nueva: Ayuda individual en el puesto -->
+                <button onclick="sendAlert('ayuda')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
+                    <div class="aqua-icon bg-gradient-to-b from-indigo-400 to-blue-700 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                        <i class="fa-solid fa-life-ring"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider block mb-0.5">Asistencia</span>
+                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Necesito ayuda aquí</h3>
+                    </div>
+                </button>
+
+                <!-- 4. Va muy rápido -->
+                <button onclick

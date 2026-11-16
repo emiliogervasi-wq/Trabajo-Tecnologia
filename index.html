@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AulaSilenciosa - Frutiger Aero & J.A.R.V.I.S.</title>
+    <title>AulaSilenciosa - Frutiger Aero & V.I.K.I.</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
             touch-action: manipulation;
-            /* Fondo blanco luminoso Frutiger Aero con cielo suave */
-            background: linear-gradient(180deg, #e0f4ff 0%, #f5fbff 42%, #ffffff 100%);
+            background: linear-gradient(180deg, #dcf2ff 0%, #f4fbff 45%, #ffffff 100%);
             color: #0f2942;
             overflow-x: hidden;
         }
 
-        /* Esferas y burbujas ambientales estilo Frutiger Aero */
+        /* Burbujas ambientales Frutiger Aero */
         .aero-orb-1 {
             position: fixed;
             top: -8%;
@@ -43,39 +42,28 @@
             pointer-events: none;
             z-index: 0;
         }
-        .aero-orb-3 {
-            position: fixed;
-            top: 35%;
-            right: 20%;
-            width: 30vw;
-            height: 30vw;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
 
         /* Paneles de cristal blanco Frutiger Aero */
         .aero-glass {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 249, 255, 0.78) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 249, 255, 0.82) 100%);
             backdrop-filter: blur(22px) saturate(160%);
             -webkit-backdrop-filter: blur(22px) saturate(160%);
             border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 30px rgba(14, 116, 144, 0.10), inset 0 2px 3px rgba(255, 255, 255, 1);
+            box-shadow: 0 8px 25px rgba(14, 116, 144, 0.10), inset 0 2px 3px rgba(255, 255, 255, 1);
         }
 
-        /* Botones táctiles con brillo superior (Glossy Aero) */
+        /* Botones táctiles XL con brillo superior (Glossy Aero) */
         .aero-btn {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(235, 248, 255, 0.85) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(232, 247, 255, 0.88) 100%);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            border: 1.5px solid rgba(186, 230, 253, 0.9);
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.10), inset 0 2px 2px rgba(255, 255, 255, 1);
-            transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid rgba(186, 230, 253, 0.95);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12), inset 0 2px 2px rgba(255, 255, 255, 1);
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
         }
-        /* Reflejo curvo superior característico de Frutiger Aero */
         .aero-btn::before {
             content: '';
             position: absolute;
@@ -83,22 +71,22 @@
             left: 0;
             right: 0;
             height: 46%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.15) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.12) 100%);
             border-radius: 22px 22px 50% 50% / 22px 22px 14px 14px;
             pointer-events: none;
         }
         .aero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 28px rgba(2, 132, 199, 0.18), inset 0 2px 3px rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(2, 132, 199, 0.20), inset 0 2px 3px rgba(255, 255, 255, 1);
             border-color: #38bdf8;
         }
         .aero-btn:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         /* Orbes de íconos brillantes tipo gel/agua */
         .aqua-icon {
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12), inset 0 2px 3px rgba(255, 255, 255, 0.75);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14), inset 0 2px 3px rgba(255, 255, 255, 0.8);
             position: relative;
         }
         .aqua-icon::after {
@@ -130,104 +118,716 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col relative selection:bg-sky-200">
+<body class="min-h-[100dvh] flex flex-col relative selection:bg-sky-200">
 
     <!-- Fondos ambientales Frutiger Aero -->
     <div class="aero-orb-1"></div>
     <div class="aero-orb-2"></div>
-    <div class="aero-orb-3"></div>
 
-    <!-- Header / Barra Superior Frutiger Aero -->
-    <header class="aero-glass sticky top-3 mx-3 md:mx-auto max-w-6xl w-[calc(100%-1.5rem)] rounded-3xl px-5 py-3.5 z-50 mt-3">
-        <div class="flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-3.5">
-                <div class="aqua-icon bg-gradient-to-b from-sky-400 to-blue-600 p-2.5 rounded-2xl text-white">
-                    <i class="fa-solid fa-bell text-xl"></i>
+    <!-- Header Compacto Frutiger Aero -->
+    <header class="aero-glass mx-2.5 md:mx-auto max-w-6xl w-[calc(100%-1.25rem)] rounded-2xl px-4 py-2.5 z-50 mt-2.5 flex-shrink-0">
+        <div class="flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="aqua-icon bg-gradient-to-b from-sky-400 to-blue-600 p-2 rounded-xl text-white">
+                    <i class="fa-solid fa-bell text-base"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl font-extrabold tracking-tight text-slate-800 flex items-center gap-2">
-                        AulaSilenciosa
-                        <span class="text-[11px] bg-gradient-to-r from-sky-500 to-cyan-500 text-white px-2.5 py-0.5 rounded-full font-bold shadow-sm">Aero</span>
-                    </h1>
-                    <p class="text-xs text-sky-700/80 font-medium">Asistente de comunicación en tiempo real</p>
-                </div>
+                <h1 class="text-lg font-extrabold tracking-tight text-slate-800 flex items-center gap-1.5">
+                    AulaSilenciosa
+                    <span class="text-[10px] bg-gradient-to-r from-sky-500 to-cyan-500 text-white px-2 py-0.5 rounded-full font-bold shadow-sm">Aero</span>
+                </h1>
             </div>
 
-            <!-- Selector de Rol, Voz J.A.R.V.I.S. y Código de Sala -->
-            <div class="flex flex-wrap items-center gap-2 bg-white/80 p-1.5 rounded-2xl border border-sky-200/80 shadow-inner">
-                <div class="flex bg-sky-100/70 rounded-xl p-0.5">
-                    <button id="btnRoleStudent" onclick="switchRole('estudiante')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow">
+            <!-- Controles Superiores -->
+            <div class="flex items-center gap-1.5 bg-white/85 p-1 rounded-xl border border-sky-200/80 shadow-inner">
+                <div class="flex bg-sky-100/80 rounded-lg p-0.5">
+                    <button type="button" id="btnRoleStudent" onclick="switchRole('estudiante')" class="cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow">
                         <i class="fa-solid fa-user-graduate mr-1"></i> Alumno
                     </button>
-                    <button id="btnRoleTeacher" onclick="switchRole('profesor')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-sky-700">
+                    <button type="button" id="btnRoleTeacher" onclick="switchRole('profesor')" class="cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all text-slate-600 hover:text-sky-700">
                         <i class="fa-solid fa-chalkboard-user mr-1"></i> Profesor
                     </button>
                 </div>
 
-                <!-- Botón Toggle Voz J.A.R.V.I.S. -->
-                <button id="btnJarvisToggle" onclick="toggleJarvisVoice()" title="Activar o silenciar voz de J.A.R.V.I.S." class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-b from-cyan-50 to-sky-100 border border-sky-300 text-sky-800 hover:bg-sky-200/70 transition flex items-center gap-1.5 shadow-sm">
-                    <i id="jarvisIcon" class="fa-solid fa-robot text-sky-600"></i>
-                    <span id="jarvisLabel">J.A.R.V.I.S.: ON</span>
+                <!-- Botón Toggle Voz V.I.K.I. -->
+                <button type="button" id="btnVikiToggle" onclick="toggleVikiVoice()" title="Activar o silenciar voz de V.I.K.I." class="cursor-pointer px-2.5 py-1 text-xs font-bold rounded-lg bg-gradient-to-b from-cyan-50 to-sky-100 border border-sky-300 text-sky-800 hover:bg-sky-200/70 transition flex items-center gap-1.5 shadow-sm">
+                    <i id="vikiIcon" class="fa-solid fa-circle-nodes text-sky-600"></i>
+                    <span id="vikiLabel">V.I.K.I.: ON</span>
                 </button>
 
-                <div class="flex items-center gap-1.5 pl-2 pr-1 border-l border-sky-200">
-                    <span class="text-xs text-slate-500 font-semibold">Sala:</span>
-                    <input type="text" id="roomInput" value="SALA-1" onchange="changeRoom()" class="bg-white border border-sky-300 text-slate-800 text-xs font-extrabold rounded-lg px-2 py-1 w-20 text-center uppercase focus:outline-none focus:border-sky-500 shadow-inner">
+                <div class="flex items-center gap-1 pl-1.5 pr-0.5 border-l border-sky-200">
+                    <span class="text-[11px] text-slate-500 font-bold hidden sm:inline">Sala:</span>
+                    <input type="text" id="roomInput" value="SALA-1" onchange="changeRoom()" class="bg-white border border-sky-300 text-slate-800 text-xs font-extrabold rounded-md px-1.5 py-0.5 w-16 sm:w-20 text-center uppercase focus:outline-none focus:border-sky-500 shadow-inner">
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Contenido Principal -->
-    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:py-6 flex flex-col relative z-10">
+    <main class="flex-1 max-w-6xl w-full mx-auto p-2.5 md:p-4 flex flex-col relative z-10">
 
-        <!-- ================= VISTA ESTUDIANTE ================= -->
-        <div id="studentView" class="flex-1 flex flex-col gap-6">
+        <!-- ================= VISTA ESTUDIANTE (9 BOTONES GRANDES EN 1 SOLA PANTALLA) ================= -->
+        <div id="studentView" class="h-[calc(100dvh-84px)] flex flex-col gap-2.5">
             
-            <!-- Estado de confirmación (oculto por defecto) -->
-            <div id="studentStatusCard" class="hidden transition-all duration-300">
-                <!-- Se llena dinámicamente -->
-            </div>
+            <!-- Estado de confirmación -->
+            <div id="studentStatusCard" class="hidden flex-shrink-0 transition-all duration-300"></div>
 
-            <div class="text-center md:text-left px-1">
-                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">¿Qué necesitas comunicar?</h2>
-            </div>
-
-            <!-- Botones Táctiles de Alerta (Sin descripciones, limpios y cristalinos) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Cuadrícula 3x3 sin scroll -->
+            <div class="flex-1 grid grid-cols-3 grid-rows-3 gap-2.5 md:gap-4">
                 
                 <!-- 1. Baño Urgente -->
-                <button onclick="sendAlert('bano')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
-                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                <button type="button" onclick="sendAlert('bano')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
                         <i class="fa-solid fa-restroom"></i>
                     </div>
-                    <div>
-                        <span class="text-[11px] font-extrabold text-red-600 uppercase tracking-wider block mb-0.5">Urgente</span>
-                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Baño urgente</h3>
-                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Baño urgente</h3>
                 </button>
 
                 <!-- 2. Enfermería -->
-                <button onclick="sendAlert('enfermeria')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
-                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                <button type="button" onclick="sendAlert('enfermeria')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-rose-400 to-red-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
                         <i class="fa-solid fa-kit-medical"></i>
                     </div>
-                    <div>
-                        <span class="text-[11px] font-extrabold text-red-600 uppercase tracking-wider block mb-0.5">Salud</span>
-                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Me siento mal</h3>
-                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Me siento mal</h3>
                 </button>
 
-                <!-- 3. Nueva: Ayuda individual en el puesto -->
-                <button onclick="sendAlert('ayuda')" class="aero-btn p-5 rounded-3xl flex items-center gap-4 text-left group">
-                    <div class="aqua-icon bg-gradient-to-b from-indigo-400 to-blue-700 text-white p-4 rounded-2xl text-3xl flex-shrink-0">
+                <!-- 3. Ayuda individual -->
+                <button type="button" onclick="sendAlert('ayuda')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-indigo-400 to-blue-700 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
                         <i class="fa-solid fa-life-ring"></i>
                     </div>
-                    <div>
-                        <span class="text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider block mb-0.5">Asistencia</span>
-                        <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Necesito ayuda aquí</h3>
-                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Ayuda aquí</h3>
                 </button>
 
                 <!-- 4. Va muy rápido -->
-                <button onclick
+                <button type="button" onclick="sendAlert('rapido')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-amber-300 to-amber-500 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Va muy rápido</h3>
+                </button>
+
+                <!-- 5. ¿Puede repetir? -->
+                <button type="button" onclick="sendAlert('repetir')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-amber-300 to-amber-500 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">¿Puede repetir?</h3>
+                </button>
+
+                <!-- 6. No veo / No escucho -->
+                <button type="button" onclick="sendAlert('visibilidad')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-orange-400 to-orange-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">No veo / No oigo</h3>
+                </button>
+
+                <!-- 7. Tengo una duda -->
+                <button type="button" onclick="sendAlert('participar')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-emerald-400 to-green-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-hand"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Tengo una duda</h3>
+                </button>
+
+                <!-- 8. Terminé actividad -->
+                <button type="button" onclick="sendAlert('termine')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-teal-400 to-emerald-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Terminé actividad</h3>
+                </button>
+
+                <!-- 9. Pausa sensorial -->
+                <button type="button" onclick="sendAlert('pausa')" class="aero-btn rounded-2xl md:rounded-3xl p-2 md:p-4 flex flex-col items-center justify-center text-center gap-1.5 md:gap-3">
+                    <div class="aqua-icon bg-gradient-to-b from-sky-400 to-cyan-600 text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl md:text-4xl flex-shrink-0">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xs sm:text-base md:text-xl font-extrabold text-slate-800 leading-tight px-1">Pausa sensorial</h3>
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- ================= VISTA PROFESOR ================= -->
+        <div id="teacherView" class="hidden flex-1 flex-col gap-5 pt-2">
+            
+            <div class="aero-glass flex flex-wrap justify-between items-center gap-4 p-4 rounded-3xl">
+                <div>
+                    <h2 class="text-lg md:text-xl font-extrabold text-slate-800 flex items-center gap-2.5">
+                        <span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></span>
+                        Panel de Monitoreo de Alertas
+                    </h2>
+                    <p class="text-xs text-slate-600 font-medium mt-0.5">Escuchando solicitudes en vivo de la <span id="teacherRoomLabel" class="font-extrabold text-sky-600">SALA-1</span></p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="testVikiVoice()" class="cursor-pointer px-4 py-2 bg-gradient-to-b from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 text-xs font-bold rounded-xl text-white transition shadow">
+                        <i class="fa-solid fa-volume-high mr-1.5"></i> Probar Voz V.I.K.I.
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor de Alertas Activas -->
+            <div id="alertsContainer" class="space-y-4">
+                <div class="aero-glass rounded-3xl p-10 text-center">
+                    <div class="aqua-icon w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-b from-sky-100 to-sky-200 flex items-center justify-center text-sky-600">
+                        <i class="fa-solid fa-mug-hot text-3xl"></i>
+                    </div>
+                    <p class="text-base font-extrabold text-slate-700">No hay solicitudes pendientes</p>
+                    <p class="text-xs text-slate-500 mt-1">Las solicitudes enviadas por los alumnos aparecerán aquí en tiempo real.</p>
+                </div>
+            </div>
+
+            <!-- Historial Reciente -->
+            <div class="mt-4">
+                <h3 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2.5 px-1 flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left text-sky-600"></i> Historial de la sesión
+                </h3>
+                <div id="historyContainer" class="aero-glass rounded-2xl p-4 text-xs text-slate-500 min-h-[60px] flex items-center justify-center font-medium">
+                    Aún no se han atendido solicitudes en esta sesión.
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- LÓGICA DE JAVASCRIPT + SINTETIZADOR DE VOZ V.I.K.I. (YO, ROBOT) -->
+    <script>
+        const CONFIG = {
+            alertTypes: {
+                bano: {
+                    titulo: 'Baño urgente',
+                    categoria: 'URGENCIA CRÍTICA',
+                    color: 'red',
+                    gradiente: 'from-rose-400 to-red-600',
+                    icono: 'fa-restroom',
+                    mensaje: 'El alumno necesita salir al servicio higiénico inmediatamente.'
+                },
+                enfermeria: {
+                    titulo: 'Me siento mal',
+                    categoria: 'SALUD / SALA DE AUXILIO',
+                    color: 'red',
+                    gradiente: 'from-rose-400 to-red-600',
+                    icono: 'fa-kit-medical',
+                    mensaje: 'El alumno reporta dolor, malestar físico o indisposición.'
+                },
+                ayuda: {
+                    titulo: 'Ayuda aquí',
+                    categoria: 'ASISTENCIA INDIVIDUAL',
+                    color: 'indigo',
+                    gradiente: 'from-indigo-400 to-blue-700',
+                    icono: 'fa-life-ring',
+                    mensaje: 'El alumno requiere apoyo directo en su puesto de trabajo.'
+                },
+                rapido: {
+                    titulo: 'Va muy rápido',
+                    categoria: 'RITMO DE CLASE',
+                    color: 'amber',
+                    gradiente: 'from-amber-300 to-amber-500',
+                    icono: 'fa-gauge-high',
+                    mensaje: 'Solicita reducir la velocidad del contenido o explicación.'
+                },
+                repetir: {
+                    titulo: '¿Puede repetir?',
+                    categoria: 'COMPRENSIÓN',
+                    color: 'amber',
+                    gradiente: 'from-amber-300 to-amber-500',
+                    icono: 'fa-rotate-left',
+                    mensaje: 'No se comprendió el último punto explicativo.'
+                },
+                visibilidad: {
+                    titulo: 'No veo / No oigo',
+                    categoria: 'ACCESIBILIDAD',
+                    color: 'orange',
+                    gradiente: 'from-orange-400 to-orange-600',
+                    icono: 'fa-eye-slash',
+                    mensaje: 'El alumno tiene dificultad para ver la pizarra o escuchar con claridad.'
+                },
+                participar: {
+                    titulo: 'Tengo una duda',
+                    categoria: 'PARTICIPACIÓN',
+                    color: 'emerald',
+                    gradiente: 'from-emerald-400 to-green-600',
+                    icono: 'fa-hand',
+                    mensaje: 'El alumno solicita turno de palabra o aclarar una duda.'
+                },
+                termine: {
+                    titulo: 'Terminé actividad',
+                    categoria: 'PROGRESO EN AULA',
+                    color: 'teal',
+                    gradiente: 'from-teal-400 to-emerald-600',
+                    icono: 'fa-circle-check',
+                    mensaje: 'El alumno ha finalizado su tarea y espera revisión o nueva instrucción.'
+                },
+                pausa: {
+                    titulo: 'Pausa sensorial',
+                    categoria: 'BIENESTAR EMOCIONAL',
+                    color: 'sky',
+                    gradiente: 'from-sky-400 to-cyan-600',
+                    icono: 'fa-brain',
+                    mensaje: 'El alumno requiere 1 minuto de autorregulación o pausa silenciosa.'
+                }
+            }
+        };
+
+        let currentRole = 'estudiante';
+        let currentRoom = 'SALA-1';
+        let activeEventSource = null;
+        let pendingAlerts = [];
+        let historyAlerts = [];
+        let currentStudentAlertId = null;
+        let vikiEnabled = true;
+        let selectedVikiVoice = null;
+
+        // Cargar y calibrar voz femenina latinoamericana estilo V.I.K.I. (Yo, Robot - Doblaje Latino/Chile)
+        function loadVikiVoice() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) return;
+
+            const spanishVoices = voices.filter(v => v.lang.toLowerCase().includes('es'));
+            
+            // Priorizar voces femeninas en español latinoamericano (Chile, México, EE.UU. Latino)
+            const latamFemaleKeywords = [
+                'catalina', 'paulina', 'sabina', 'dalia', 'ximena', 'sofia', 'sofía', 
+                'camila', 'valeria', 'helena', 'laura', 'monica', 'mónica', 
+                'google español de estados unidos', 'microsoft sabina', 'microsoft daria', 'female', 'mujer'
+            ];
+
+            // 1. Buscar coincidencia femenina latinoamericana exacta
+            selectedVikiVoice = spanishVoices.find(v => 
+                latamFemaleKeywords.some(kw => v.name.toLowerCase().includes(kw))
+            );
+
+            // 2. Si no encuentra por nombre, buscar cualquier voz en es-CL, es-MX, es-419 o es-US
+            if (!selectedVikiVoice) {
+                selectedVikiVoice = spanishVoices.find(v => 
+                    ['es-cl', 'es-mx', 'es-419', 'es-us', 'es-ar'].includes(v.lang.toLowerCase())
+                );
+            }
+
+            // 3. Respaldo: cualquier voz en español disponible
+            if (!selectedVikiVoice) {
+                selectedVikiVoice = spanishVoices[0] || voices[0];
+            }
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadVikiVoice;
+            loadVikiVoice();
+        }
+
+        // Función de locución estilo V.I.K.I. (serena, femenina, calculada y cristalina)
+        function speakViki(texto) {
+            if (!vikiEnabled) return;
+            if (!('speechSynthesis' in window)) return;
+            
+            try {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(texto);
+                
+                if (!selectedVikiVoice) loadVikiVoice();
+                if (selectedVikiVoice) {
+                    utterance.voice = selectedVikiVoice;
+                    utterance.lang = selectedVikiVoice.lang;
+                } else {
+                    utterance.lang = 'es-CL';
+                }
+                
+                // Calibración V.I.K.I.: timbre femenino suave, sereno y ligeramente sintético
+                utterance.pitch = 1.08;
+                utterance.rate = 0.96;
+                utterance.volume = 1.0;
+
+                window.speechSynthesis.speak(utterance);
+            } catch (e) {
+                console.warn('Error en síntesis de voz:', e);
+            }
+        }
+
+        // Botón para encender o apagar completamente a V.I.K.I.
+        function toggleVikiVoice() {
+            vikiEnabled = !vikiEnabled;
+            const label = document.getElementById('vikiLabel');
+            const icon = document.getElementById('vikiIcon');
+            const btn = document.getElementById('btnVikiToggle');
+
+            if (vikiEnabled) {
+                label.innerText = 'V.I.K.I.: ON';
+                icon.className = 'fa-solid fa-circle-nodes text-sky-600';
+                btn.className = 'cursor-pointer px-2.5 py-1 text-xs font-bold rounded-lg bg-gradient-to-b from-cyan-50 to-sky-100 border border-sky-300 text-sky-800 hover:bg-sky-200/70 transition flex items-center gap-1.5 shadow-sm';
+                speakViki('Sistemas de asistencia VIKI activados.');
+            } else {
+                label.innerText = 'V.I.K.I.: OFF';
+                icon.className = 'fa-solid fa-volume-xmark text-slate-400';
+                btn.className = 'cursor-pointer px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 border border-slate-300 text-slate-500 hover:bg-slate-200 transition flex items-center gap-1.5 shadow-sm';
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+        }
+
+        function testVikiVoice() {
+            playAlertSound();
+            setTimeout(() => {
+                speakViki(`Hola profesor. Sistemas de VIKI en línea. Monitoreando sala ${currentRoom.replace('-', ' ')} sin anomalías.`);
+            }, 300);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modeParam = urlParams.get('modo');
+            const roomParam = urlParams.get('sala');
+            const alertParam = urlParams.get('alerta');
+
+            if (roomParam) {
+                currentRoom = roomParam.trim().toUpperCase();
+                document.getElementById('roomInput').value = currentRoom;
+            }
+
+            if (modeParam === 'profesor') {
+                switchRole('profesor');
+            } else {
+                switchRole('estudiante');
+            }
+
+            if (alertParam && CONFIG.alertTypes[alertParam]) {
+                sendAlert(alertParam);
+            }
+        });
+
+        // Cambio de vista instantáneo y protegido contra fallos de red
+        function switchRole(role) {
+            currentRole = role;
+            const btnStudent = document.getElementById('btnRoleStudent');
+            const btnTeacher = document.getElementById('btnRoleTeacher');
+            const viewStudent = document.getElementById('studentView');
+            const viewTeacher = document.getElementById('teacherView');
+
+            if (role === 'estudiante') {
+                btnStudent.className = "cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow";
+                btnTeacher.className = "cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all text-slate-600 hover:text-sky-700";
+                viewStudent.classList.remove('hidden');
+                viewStudent.classList.add('flex');
+                viewTeacher.classList.add('hidden');
+                viewTeacher.classList.remove('flex');
+            } else {
+                btnTeacher.className = "cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow";
+                btnStudent.className = "cursor-pointer px-2.5 py-1 text-xs font-bold rounded-md transition-all text-slate-600 hover:text-sky-700";
+                viewTeacher.classList.remove('hidden');
+                viewTeacher.classList.add('flex');
+                viewStudent.classList.add('hidden');
+                viewStudent.classList.remove('flex');
+                document.getElementById('teacherRoomLabel').innerText = currentRoom;
+            }
+
+            connectToRoom();
+        }
+
+        function changeRoom() {
+            const input = document.getElementById('roomInput');
+            currentRoom = input.value.trim().toUpperCase() || 'SALA-1';
+            input.value = currentRoom;
+            const label = document.getElementById('teacherRoomLabel');
+            if (label) label.innerText = currentRoom;
+            connectToRoom();
+        }
+
+        function connectToRoom() {
+            try {
+                if (activeEventSource) {
+                    activeEventSource.close();
+                    activeEventSource = null;
+                }
+
+                const cleanRoom = currentRoom.replace(/[^A-Z0-9]/g, '');
+                
+                if (currentRole === 'profesor') {
+                    const topicAlerts = `aula_silenciosa_${cleanRoom}`;
+                    activeEventSource = new EventSource(`https://ntfy.sh/${topicAlerts}/sse`);
+                    
+                    activeEventSource.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            if (data.message) {
+                                const payload = JSON.parse(data.message);
+                                handleIncomingTeacherAlert(payload);
+                            }
+                        } catch (e) {
+                            console.log('Mensaje recibido:', event.data);
+                        }
+                    };
+                } else {
+                    const topicConfirm = `aula_silenciosa_${cleanRoom}_confirm`;
+                    activeEventSource = new EventSource(`https://ntfy.sh/${topicConfirm}/sse`);
+
+                    activeEventSource.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            if (data.message) {
+                                const payload = JSON.parse(data.message);
+                                if (payload.action === 'visto' && payload.id === currentStudentAlertId) {
+                                    handleStudentConfirmation();
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Confirmación recibida:', event.data);
+                        }
+                    };
+                }
+            } catch (err) {
+                console.warn('Error al conectar canal en tiempo real:', err);
+            }
+        }
+
+        async function sendAlert(typeKey) {
+            const alertInfo = CONFIG.alertTypes[typeKey];
+            if (!alertInfo) return;
+
+            if ('speechSynthesis' in window && vikiEnabled) {
+                const warmUp = new SpeechSynthesisUtterance('');
+                window.speechSynthesis.speak(warmUp);
+            }
+
+            const alertId = 'ALT-' + Date.now();
+            currentStudentAlertId = alertId;
+
+            const payload = {
+                id: alertId,
+                typeKey: typeKey,
+                titulo: alertInfo.titulo,
+                categoria: alertInfo.categoria,
+                color: alertInfo.color,
+                gradiente: alertInfo.gradiente,
+                icono: alertInfo.icono,
+                mensaje: alertInfo.mensaje,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+            };
+
+            showStudentStatusCard('waiting', payload);
+
+            const cleanRoom = currentRoom.replace(/[^A-Z0-9]/g, '');
+            const topicAlerts = `aula_silenciosa_${cleanRoom}`;
+
+            try {
+                await fetch(`https://ntfy.sh/${topicAlerts}`, {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'application/json' },
+                    keepalive: true
+                });
+            } catch (err) {
+                console.error('Error al transmitir la alerta:', err);
+            }
+        }
+
+        async function markAsSeen(alertId) {
+            const cleanRoom = currentRoom.replace(/[^A-Z0-9]/g, '');
+            const topicConfirm = `aula_silenciosa_${cleanRoom}_confirm`;
+
+            const payload = {
+                action: 'visto',
+                id: alertId,
+                timestamp: new Date().toLocaleTimeString()
+            };
+
+            try {
+                await fetch(`https://ntfy.sh/${topicConfirm}`, {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'application/json' },
+                    keepalive: true
+                });
+
+                const index = pendingAlerts.findIndex(a => a.id === alertId);
+                if (index !== -1) {
+                    const alert = pendingAlerts.splice(index, 1)[0];
+                    historyAlerts.unshift(alert);
+                    renderTeacherAlerts();
+                    renderTeacherHistory();
+                }
+            } catch (err) {
+                console.error('Error al enviar visto:', err);
+            }
+        }
+
+        function handleIncomingTeacherAlert(payload) {
+            if (pendingAlerts.some(a => a.id === payload.id)) return;
+
+            pendingAlerts.unshift(payload);
+            renderTeacherAlerts();
+            playAlertSound();
+
+            setTimeout(() => {
+                const tituloLimpio = payload.titulo.replace(/[¿?]/g, '');
+                speakViki(`Atención profesor. Solicitud recibida en ${currentRoom.replace('-', ' ')}: ${tituloLimpio}.`);
+            }, 350);
+        }
+
+        function renderTeacherAlerts() {
+            const container = document.getElementById('alertsContainer');
+
+            if (pendingAlerts.length === 0) {
+                container.innerHTML = `
+                    <div class="aero-glass rounded-3xl p-10 text-center">
+                        <div class="aqua-icon w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-b from-sky-100 to-sky-200 flex items-center justify-center text-sky-600">
+                            <i class="fa-solid fa-mug-hot text-3xl"></i>
+                        </div>
+                        <p class="text-base font-extrabold text-slate-700">No hay solicitudes pendientes</p>
+                        <p class="text-xs text-slate-500 mt-1">Las solicitudes enviadas por los alumnos aparecerán aquí en tiempo real.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = pendingAlerts.map(alert => {
+                const grad = alert.gradiente || 'from-sky-400 to-blue-600';
+                return `
+                <div class="aero-glass rounded-3xl p-5 border-2 border-${alert.color}-400 pulse-${alert.color === 'red' ? 'red' : 'green'} transition-all">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="aqua-icon bg-gradient-to-b ${grad} text-white p-4 rounded-2xl text-3xl">
+                                <i class="fa-solid ${alert.icono}"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[11px] font-extrabold bg-${alert.color}-100 text-${alert.color}-700 border border-${alert.color}-300 px-2.5 py-0.5 rounded-lg uppercase tracking-wider">
+                                        ${alert.categoria}
+                                    </span>
+                                    <span class="text-xs text-slate-500 font-semibold">
+                                        <i class="fa-regular fa-clock mr-1"></i>${alert.timestamp}
+                                    </span>
+                                </div>
+                                <h3 class="text-xl font-extrabold text-slate-800 mt-1">${alert.titulo}</h3>
+                                <p class="text-sm text-slate-600 mt-0.5">${alert.mensaje}</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="markAsSeen('${alert.id}')" class="cursor-pointer w-full md:w-auto bg-gradient-to-b from-emerald-400 to-green-600 hover:from-emerald-500 hover:to-green-700 active:scale-95 text-white font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-check-double text-lg"></i>
+                            MARCAR VISTO / EN CAMINO
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function renderTeacherHistory() {
+            const container = document.getElementById('historyContainer');
+            if (historyAlerts.length === 0) return;
+
+            container.innerHTML = `
+                <div class="w-full space-y-2">
+                    ${historyAlerts.slice(0, 5).map(item => `
+                        <div class="flex items-center justify-between bg-white/80 hover:bg-white transition p-3 rounded-xl border border-sky-200/70 shadow-sm">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid ${item.icono} text-${item.color}-600 text-sm"></i>
+                                <span class="font-bold text-slate-700">${item.titulo}</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-slate-500 font-medium">
+                                <span>${item.timestamp}</span>
+                                <span class="text-emerald-600 font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-check"></i> Atendido
+                                </span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function showStudentStatusCard(state, payload) {
+            const card = document.getElementById('studentStatusCard');
+            card.classList.remove('hidden');
+
+            if (state === 'waiting') {
+                card.innerHTML = `
+                    <div class="aero-glass border-2 border-amber-400 rounded-2xl p-3 flex items-center justify-center gap-3 shadow-md">
+                        <div class="aqua-icon inline-flex items-center justify-center w-10 h-10 bg-gradient-to-b from-amber-300 to-amber-500 text-white rounded-full text-lg animate-spin flex-shrink-0">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-sm font-extrabold text-slate-800">Enviado: <span class="text-amber-700">${payload.titulo}</span></h3>
+                            <p class="text-xs text-slate-500 font-medium">Esperando confirmación del profesor...</p>
+                        </div>
+                    </div>
+                `;
+            } else if (state === 'confirmed') {
+                card.innerHTML = `
+                    <div class="aero-glass border-2 border-emerald-400 rounded-2xl p-3 flex items-center justify-center gap-3 pulse-green shadow-md">
+                        <div class="aqua-icon inline-flex items-center justify-center w-10 h-10 bg-gradient-to-b from-emerald-400 to-green-600 text-white rounded-full text-lg flex-shrink-0">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-sm sm:text-base font-extrabold text-slate-800">✅ ¡SOLICITUD ATENDIDA!</h3>
+                            <p class="text-xs text-emerald-700 font-bold">Tu profesor ya vio tu alerta y viene en camino.</p>
+                        </div>
+                    </div>
+                `;
+
+                playSuccessSound();
+                setTimeout(() => {
+                    speakViki('Solicitud confirmada. El profesor ya fue notificado y va en camino.');
+                }, 400);
+
+                setTimeout(() => {
+                    card.classList.add('hidden');
+                    currentStudentAlertId = null;
+                }, 6000);
+            }
+        }
+
+        function handleStudentConfirmation() {
+            showStudentStatusCard('confirmed', null);
+        }
+
+        function playAlertSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+
+                gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch (e) {
+                console.log('Audio no soportado o bloqueado');
+            }
+        }
+
+        function playSuccessSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
+
+                gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 0.4);
+            } catch (e) {
+                console.log('Audio no soportado');
+            }
+        }
+    </script>
+</body>
+</html>

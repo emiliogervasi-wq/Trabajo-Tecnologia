@@ -293,7 +293,7 @@
 
     </main>
 
-    <!-- LÓGICA DE JAVASCRIPT + SINTETIZADOR DE VOZ V.I.K.I. (YO, ROBOT) -->
+    <!-- LÓGICA DE JAVASCRIPT + SINTETIZADOR DE VOZ V.I.K.I. CON EFECTO MULTI-PARLANTE -->
     <script>
         const CONFIG = {
             alertTypes: {
@@ -380,6 +380,7 @@
         let currentStudentAlertId = null;
         let vikiEnabled = true;
         let selectedVikiVoice = null;
+        let vikiTimers = [];
 
         // Cargar y calibrar voz femenina latinoamericana estilo V.I.K.I. (Yo, Robot - Doblaje Latino/Chile)
         function loadVikiVoice() {
@@ -389,26 +390,22 @@
 
             const spanishVoices = voices.filter(v => v.lang.toLowerCase().includes('es'));
             
-            // Priorizar voces femeninas en español latinoamericano (Chile, México, EE.UU. Latino)
             const latamFemaleKeywords = [
                 'catalina', 'paulina', 'sabina', 'dalia', 'ximena', 'sofia', 'sofía', 
                 'camila', 'valeria', 'helena', 'laura', 'monica', 'mónica', 
                 'google español de estados unidos', 'microsoft sabina', 'microsoft daria', 'female', 'mujer'
             ];
 
-            // 1. Buscar coincidencia femenina latinoamericana exacta
             selectedVikiVoice = spanishVoices.find(v => 
                 latamFemaleKeywords.some(kw => v.name.toLowerCase().includes(kw))
             );
 
-            // 2. Si no encuentra por nombre, buscar cualquier voz en es-CL, es-MX, es-419 o es-US
             if (!selectedVikiVoice) {
                 selectedVikiVoice = spanishVoices.find(v => 
                     ['es-cl', 'es-mx', 'es-419', 'es-us', 'es-ar'].includes(v.lang.toLowerCase())
                 );
             }
 
-            // 3. Respaldo: cualquier voz en español disponible
             if (!selectedVikiVoice) {
                 selectedVikiVoice = spanishVoices[0] || voices[0];
             }
@@ -419,29 +416,47 @@
             loadVikiVoice();
         }
 
-        // Función de locución estilo V.I.K.I. (serena, femenina, calculada y cristalina)
+        function clearVikiAudio() {
+            vikiTimers.forEach(t => clearTimeout(t));
+            vikiTimers = [];
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Función de locución estilo V.I.K.I. con efecto acústico de múltiples parlantes en sala
         function speakViki(texto) {
             if (!vikiEnabled) return;
             if (!('speechSynthesis' in window)) return;
             
             try {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(texto);
-                
+                clearVikiAudio();
                 if (!selectedVikiVoice) loadVikiVoice();
-                if (selectedVikiVoice) {
-                    utterance.voice = selectedVikiVoice;
-                    utterance.lang = selectedVikiVoice.lang;
-                } else {
-                    utterance.lang = 'es-CL';
-                }
-                
-                // Calibración V.I.K.I.: timbre femenino suave, sereno y ligeramente sintético
-                utterance.pitch = 1.08;
-                utterance.rate = 0.96;
-                utterance.volume = 1.0;
 
-                window.speechSynthesis.speak(utterance);
+                // 3 capas acústicas con micro-retardos para simular megafonía central (varios parlantes en sala)
+                const parlantes = [
+                    { delay: 0,   volume: 1.0,  pitch: 1.08, rate: 0.96 }, // Parlante principal cercano
+                    { delay: 55,  volume: 0.45, pitch: 1.06, rate: 0.96 }, // Parlante medio de sala
+                    { delay: 115, volume: 0.20, pitch: 1.04, rate: 0.96 }  // Reverberación de fondo
+                ];
+
+                parlantes.forEach(p => {
+                    const timer = setTimeout(() => {
+                        if (!vikiEnabled) return;
+                        const utterance = new SpeechSynthesisUtterance(texto);
+                        if (selectedVikiVoice) {
+                            utterance.voice = selectedVikiVoice;
+                            utterance.lang = selectedVikiVoice.lang;
+                        } else {
+                            utterance.lang = 'es-CL';
+                        }
+                        utterance.volume = p.volume;
+                        utterance.pitch = p.pitch;
+                        utterance.rate = p.rate;
+                        window.speechSynthesis.speak(utterance);
+                    }, p.delay);
+                    vikiTimers.push(timer);
+                });
             } catch (e) {
                 console.warn('Error en síntesis de voz:', e);
             }
@@ -463,9 +478,7 @@
                 label.innerText = 'V.I.K.I.: OFF';
                 icon.className = 'fa-solid fa-volume-xmark text-slate-400';
                 btn.className = 'cursor-pointer px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 border border-slate-300 text-slate-500 hover:bg-slate-200 transition flex items-center gap-1.5 shadow-sm';
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                }
+                clearVikiAudio();
             }
         }
 
@@ -498,7 +511,6 @@
             }
         });
 
-        // Cambio de vista instantáneo y protegido contra fallos de red
         function switchRole(role) {
             currentRole = role;
             const btnStudent = document.getElementById('btnRoleStudent');
